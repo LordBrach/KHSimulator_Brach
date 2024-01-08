@@ -13,19 +13,20 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] InputActionReference _move;
     [SerializeField] float _speed;
+    [SerializeField] float _rotationSpeed;
 
     private Rigidbody _rBody;
 
     // Event pour les dev
     public event Action OnStartMove;
-    public event Action<int> OnHealthUpdate;
-
+    public event Action OnStopMove;
+    //public event Action OnUpdateMove;
     // Event pour les GD
     [SerializeField] UnityEvent _onEvent;
     [SerializeField] UnityEvent _onEventPost;
 
     public Vector2 JoystickDirection { get; private set; }
-    //Coroutine MovementRoutine { get; set; }
+    Coroutine MovementRoutine { get; set; }
 
     private void Start()
     {
@@ -42,28 +43,37 @@ public class PlayerMove : MonoBehaviour
 
     private void UpdateMove(InputAction.CallbackContext context)
     {
-        //throw new NotImplementedException();
+       //OnUpdateMove?.Invoke();
     }
 
     private void StopMove(InputAction.CallbackContext context)
     {
-        //throw new NotImplementedException();
+        OnStopMove?.Invoke();
     }
 
     private void StartMove(InputAction.CallbackContext context)
     {
         OnStartMove?.Invoke();
-        StartCoroutine(PlayerMoveRoutine());
+        MovementRoutine = StartCoroutine(PlayerMoveRoutine());
     }
 
     IEnumerator PlayerMoveRoutine()
     {
         while(true)
         {
+            // TODO maybe change this to fix the "locked to axises" issue
             JoystickDirection = _move.action.ReadValue<Vector2>();
             Vector3 direction = new Vector3(JoystickDirection.x, 0, JoystickDirection.y);
+            direction.Normalize();
 
             _rBody.velocity = direction * _speed;
+            
+            if(direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
+            }
+
             yield return null;
         }
     }

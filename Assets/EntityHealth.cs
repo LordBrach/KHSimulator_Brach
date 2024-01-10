@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Processors;
 
 public class EntityHealth : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class EntityHealth : MonoBehaviour
     // variables
     [SerializeField] bool _isPlayer = false;
     [SerializeField] int _maxHealth;
+    private bool isDead;
+
     public int CurrentHealth { get; private set; }
 
     // Event pour les dev
@@ -66,18 +69,21 @@ public class EntityHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(damage  < 0) { damage = 0; }
-
-        _onDmgEvent.Invoke();
-        CurrentHealth = CurrentHealth - damage;
-        if (CurrentHealth <= 0)
+        if(!isDead)
         {
-            CurrentHealth = 0;
-            OnDeath?.Invoke();
-        }
-        else if (_isPlayer)
-        {
-            OnGettingHit?.Invoke(CurrentHealth);
+            if(damage  < 0) { damage = 0; }
+            _onDmgEvent.Invoke();
+            CurrentHealth = CurrentHealth - damage;
+            if (CurrentHealth <= 0)
+            {
+                isDead = true;
+                CurrentHealth = 0;
+                OnDeath?.Invoke();
+                // Should i try to receive OnDeath event in the other player scripts to disable them by making a new IsDead var in 
+                // Or just pass the entityHealth (which i would've done with option one) and check IsDead
+                if (_isPlayer) { OnGettingHit?.Invoke(CurrentHealth); } // brain is not braining rn, simplify later dont repeat
+            }
+            else if (_isPlayer) { OnGettingHit?.Invoke(CurrentHealth); }
         }
     }
 

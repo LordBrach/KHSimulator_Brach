@@ -12,7 +12,6 @@ public class EntityHealth : MonoBehaviour, IHealth
     [SerializeField] InputActionReference _selfwound;
 
     // variables
-    [SerializeField] bool _isPlayer = false;
     [SerializeField] int _maxHealth;
 
     public int _CurrentHealth { get; private set; }
@@ -39,11 +38,12 @@ public class EntityHealth : MonoBehaviour, IHealth
     // Event pour les GD
     [SerializeField] UnityEvent _onHealEvent;
     [SerializeField] UnityEvent _onDmgEvent;
+    [SerializeField] UnityEvent _onDeathEvent;
 
     private void Awake()
     {
         _CurrentHealth = _maxHealth;
-        if(_isPlayer)
+        if (_heal && _selfwound)
         {
             _heal?.action.actionMap.Enable();
             _selfwound?.action.actionMap.Enable();
@@ -56,10 +56,10 @@ public class EntityHealth : MonoBehaviour, IHealth
 
     private void OnDisable()
     {
-        if(_isPlayer)
-        {
-            _heal.action.actionMap.Disable();
-            _selfwound.action.actionMap.Disable();
+        if(_heal && _selfwound) 
+        { 
+            _heal?.action.actionMap.Disable();
+            _selfwound?.action.actionMap.Disable();
 
             _heal.action.started -= SelfHeal;
             _selfwound.action.started -= SelfWound;
@@ -88,6 +88,7 @@ public class EntityHealth : MonoBehaviour, IHealth
                 isDead = true;
                 _CurrentHealth = 0;
                 OnDeath?.Invoke();
+                _onDeathEvent.Invoke();
                 // Should i try to receive OnDeath event in the other player scripts to disable them by making a new IsDead var in 
                 // Or just pass the entityHealth (which i would've done with option one) and check IsDead
             }
@@ -106,15 +107,17 @@ public class EntityHealth : MonoBehaviour, IHealth
             { 
                 _CurrentHealth = _maxHealth; 
             }
-            if(_isPlayer)
-            { 
-                OnGettingHealed?.Invoke(_CurrentHealth); 
-            }
+            OnGettingHealed?.Invoke(_CurrentHealth); 
         }
     }
 
     public bool CheckDeath()
     {
         return isDead;
+    }
+
+    public void DestroyObject() // to destroy from unity events
+    {
+        Destroy(this.gameObject);
     }
 }

@@ -5,28 +5,25 @@ using UnityEngine;
 public class HitEntity : MonoBehaviour
 {
     [SerializeField] BoxCollider _itemCollider;
-    private IHealth playerHealth;
+    private IHealth entityHealth;
     [SerializeField] int _dmgValue = 1;
     [SerializeField] float _cdDuration = 0.5f;
     private bool _onCoolDown = false;
 
     private void OnTriggerStay(Collider other)
     {
-        if (_itemCollider != null && other.gameObject.CompareTag("Player"))
+        if (_itemCollider != null && !_onCoolDown && (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Damageable")))
         {
-            if(!_onCoolDown)
-            {
-                playerHealth = other.GetComponent<IHealth>();
-                playerHealth.TakeDamage(_dmgValue);
-                StartCoroutine(dmgCooldown());
-            }
-           
+            entityHealth = other.GetComponent<IHealth>();
+            entityHealth.TakeDamage(_dmgValue);
+            StartCoroutine(dmgCooldown());
         }
-        IEnumerator dmgCooldown()
-        {
-            _onCoolDown = true;
-            yield return new WaitForSeconds(_cdDuration);
-            _onCoolDown = false;
-        }
+    }
+        
+    IEnumerator dmgCooldown()
+    {
+        _onCoolDown = true;
+        yield return new WaitForSeconds(_cdDuration);
+        _onCoolDown = false;
     }
 }

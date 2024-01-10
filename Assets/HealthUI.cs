@@ -17,8 +17,8 @@ public class HealthUI : MonoBehaviour
     {
         _playerHealth.OnGettingHealed += UpdateSlider;
         _playerHealth.OnGettingHit += UpdateSlider;
-        CachedMaxHealth = _playerHealth.CurrentHealth;
-        _slider.value = _playerHealth.CurrentHealth;
+        CachedMaxHealth = _playerHealth._CurrentHealth;
+        _slider.value = _playerHealth._CurrentHealth;
         _text.text = $"{CachedMaxHealth} / {CachedMaxHealth}";
 
     }

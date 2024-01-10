@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Processors;
 
-public class EntityHealth : MonoBehaviour
+public class EntityHealth : MonoBehaviour, IHealth
 {
     [SerializeField] InputActionReference _heal;
     [SerializeField] InputActionReference _selfwound;
@@ -14,9 +14,18 @@ public class EntityHealth : MonoBehaviour
     // variables
     [SerializeField] bool _isPlayer = false;
     [SerializeField] int _maxHealth;
-    private bool isDead;
 
-    public int CurrentHealth { get; private set; }
+    public int _CurrentHealth { get; private set; }
+
+    public bool IsDead
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    bool isDead = false;
 
     // Event pour les dev
     //public event Action<int> OnHealthUpdate;
@@ -33,7 +42,7 @@ public class EntityHealth : MonoBehaviour
 
     private void Awake()
     {
-        CurrentHealth = _maxHealth;
+        _CurrentHealth = _maxHealth;
         if(_isPlayer)
         {
             _heal?.action.actionMap.Enable();
@@ -73,17 +82,16 @@ public class EntityHealth : MonoBehaviour
         {
             if(damage  < 0) { damage = 0; }
             _onDmgEvent.Invoke();
-            CurrentHealth = CurrentHealth - damage;
-            if (CurrentHealth <= 0)
+            _CurrentHealth = _CurrentHealth - damage;
+            if (_CurrentHealth <= 0)
             {
                 isDead = true;
-                CurrentHealth = 0;
+                _CurrentHealth = 0;
                 OnDeath?.Invoke();
                 // Should i try to receive OnDeath event in the other player scripts to disable them by making a new IsDead var in 
                 // Or just pass the entityHealth (which i would've done with option one) and check IsDead
-                if (_isPlayer) { OnGettingHit?.Invoke(CurrentHealth); } // brain is not braining rn, simplify later dont repeat
             }
-            else if (_isPlayer) { OnGettingHit?.Invoke(CurrentHealth); }
+            OnGettingHit?.Invoke(_CurrentHealth);
         }
     }
 
@@ -92,16 +100,21 @@ public class EntityHealth : MonoBehaviour
         if (value < 0) { TakeDamage(value); }
         else
         {
-            CurrentHealth = CurrentHealth + value;
+            _CurrentHealth = _CurrentHealth + value;
             _onHealEvent.Invoke();
-            if (CurrentHealth >= _maxHealth) 
+            if (_CurrentHealth >= _maxHealth) 
             { 
-                CurrentHealth = _maxHealth; 
+                _CurrentHealth = _maxHealth; 
             }
             if(_isPlayer)
             { 
-                OnGettingHealed?.Invoke(CurrentHealth); 
+                OnGettingHealed?.Invoke(_CurrentHealth); 
             }
         }
+    }
+
+    public bool CheckDeath()
+    {
+        return isDead;
     }
 }

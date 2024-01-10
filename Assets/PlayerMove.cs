@@ -54,6 +54,8 @@ public class PlayerMove : MonoBehaviour
     private void StartMove(InputAction.CallbackContext context)
     {
         OnStartMove?.Invoke();
+        if(MovementRoutine != null)
+            StopCoroutine(MovementRoutine);
         MovementRoutine = StartCoroutine(PlayerMoveRoutine());
     }
 
@@ -66,15 +68,16 @@ public class PlayerMove : MonoBehaviour
             Vector3 direction = new Vector3(JoystickDirection.x, 0, JoystickDirection.y);
             direction.Normalize();
 
-            _rBody.velocity = direction * _speed;
-            
-            if(direction != Vector3.zero)
+
+            if (direction != Vector3.zero)
             {
-                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up) * transform.rotation;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
             }
 
-            yield return null;
+            _rBody.velocity = ( (direction.x * transform.right) + (direction.z * transform.forward)  ) * _speed;
+
+            yield return new WaitForFixedUpdate();
         }
     }
     private void OnDestroy()

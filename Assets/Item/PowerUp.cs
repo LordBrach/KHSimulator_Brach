@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class PowerUp : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] int _value;
 
-    // Update is called once per frame
-    void Update()
+    public override void ItemEffect(GameObject go)
     {
-        
+        throw new System.NotImplementedException();
     }
 }

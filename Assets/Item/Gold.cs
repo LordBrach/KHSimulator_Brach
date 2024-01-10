@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 public class Gold : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] int _value;
+    private GoldProxy _proxy;
 
-    // Update is called once per frame
-    void Update()
+    public override void ItemEffect(GameObject go)
     {
-        
+        Debug.Log("GOLD");
+        _proxy = go.GetComponent<GoldProxy>();
+        if (_proxy != null)
+        {
+            _proxy.ChangeGoldValue(_value);
+            
+        }
     }
 }

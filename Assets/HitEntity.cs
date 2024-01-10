@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class HitEntity : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] BoxCollider _itemCollider;
+    private IHealth playerHealth;
+    [SerializeField] int _dmgValue = 1;
+    [SerializeField] float _cdDuration = 0.5f;
+    private bool _onCoolDown = false;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerStay(Collider other)
     {
-        
+        if (_itemCollider != null && other.gameObject.CompareTag("Player"))
+        {
+            if(!_onCoolDown)
+            {
+                playerHealth = other.GetComponent<IHealth>();
+                playerHealth.TakeDamage(_dmgValue);
+                StartCoroutine(dmgCooldown());
+            }
+           
+        }
+        IEnumerator dmgCooldown()
+        {
+            _onCoolDown = true;
+            yield return new WaitForSeconds(_cdDuration);
+            _onCoolDown = false;
+        }
     }
 }

@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 27752331}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.78, y: 0, z: 6.98}
+  m_LocalPosition: {x: -6.65, y: 0, z: 5.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -306,7 +306,7 @@ Transform:
   m_GameObject: {fileID: 58043774}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.9422, y: 0, z: -17.147}
+  m_LocalPosition: {x: 6.08, y: 0, z: 2.6}
   m_LocalScale: {x: 2.3547, y: 2.4779, z: 4.6736}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -325,6 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72b57696a4fd44686ee9ab3191a519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemCollider: {fileID: 58043775}
+  _dmgValue: 10
+  _cdDuration: 0.3
 --- !u!95 &58043778
 Animator:
   serializedVersion: 5
@@ -513,9 +516,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261620509}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.08, y: 0, z: 3.499}
-  m_LocalScale: {x: 1.1875, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 58043776}
@@ -1031,6 +1034,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 792663629}
     m_Modifications:
+    - target: {fileID: -5947771223580394899, guid: 8cbcc73477c16c545804b189e6229774,
+        type: 3}
+      propertyPath: itemCollider
+      value: 
+      objectReference: {fileID: 1350173287}
+    - target: {fileID: -5947771223580394899, guid: 8cbcc73477c16c545804b189e6229774,
+        type: 3}
+      propertyPath: potionVisuals
+      value: 
+      objectReference: {fileID: 1350173288}
+    - target: {fileID: -5947771223580394899, guid: 8cbcc73477c16c545804b189e6229774,
+        type: 3}
+      propertyPath: potionParticles
+      value: 
+      objectReference: {fileID: 198927480420149238, guid: b395d5d6eb4b4b846acc021ee036b744,
+        type: 3}
     - target: {fileID: 97553736113787560, guid: 8cbcc73477c16c545804b189e6229774,
         type: 3}
       propertyPath: m_RootOrder
@@ -1569,6 +1588,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f72b57696a4fd44686ee9ab3191a519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemCollider: {fileID: 0}
+  _dmgValue: 1
+  _cdDuration: 1
 --- !u!1001 &1032090308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2197,6 +2219,18 @@ MonoBehaviour:
   _onEventPost:
     m_PersistentCalls:
       m_Calls: []
+--- !u!135 &1350173287 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 97553736113787567, guid: 8cbcc73477c16c545804b189e6229774,
+    type: 3}
+  m_PrefabInstance: {fileID: 599547463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1350173288 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 97553736113787566, guid: 8cbcc73477c16c545804b189e6229774,
+    type: 3}
+  m_PrefabInstance: {fileID: 599547463}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1576631183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2205,6 +2239,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 792663629}
     m_Modifications:
+    - target: {fileID: 4441928871813012542, guid: df17769e7a3d8134d8ac027e1df9461e,
+        type: 3}
+      propertyPath: _value
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441928871813012542, guid: df17769e7a3d8134d8ac027e1df9461e,
+        type: 3}
+      propertyPath: itemCollider
+      value: 
+      objectReference: {fileID: 1576631186}
+    - target: {fileID: 4441928871813012542, guid: df17769e7a3d8134d8ac027e1df9461e,
+        type: 3}
+      propertyPath: potionVisuals
+      value: 
+      objectReference: {fileID: 1576631187}
     - target: {fileID: 7068944266405786497, guid: df17769e7a3d8134d8ac027e1df9461e,
         type: 3}
       propertyPath: m_RootOrder
@@ -2273,6 +2322,18 @@ PrefabInstance:
 --- !u!4 &1576631184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7068944266405786497, guid: df17769e7a3d8134d8ac027e1df9461e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1576631183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1576631186 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 7068944266405786502, guid: df17769e7a3d8134d8ac027e1df9461e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1576631183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1576631187 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7068944266405786503, guid: df17769e7a3d8134d8ac027e1df9461e,
     type: 3}
   m_PrefabInstance: {fileID: 1576631183}
   m_PrefabAsset: {fileID: 0}
@@ -2909,9 +2970,10 @@ GameObject:
   - component: {fileID: 1850274032}
   - component: {fileID: 1850274033}
   - component: {fileID: 1850274034}
+  - component: {fileID: 1850274035}
   m_Layer: 0
   m_Name: Physics
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2968,6 +3030,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityHealthRef: {fileID: 1349007869}
+--- !u!114 &1850274035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850274031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938d66b9b789f7342aa76d79212d4536, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityGoldRef: {fileID: 1349007870}
 --- !u!1001 &1915564914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2976,6 +3051,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 792663629}
     m_Modifications:
+    - target: {fileID: 5807341548557711608, guid: 0c807365b9687b644a173a505dba58bb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5807341548557711611, guid: 0c807365b9687b644a173a505dba58bb,
         type: 3}
       propertyPath: m_Name
@@ -3036,6 +3116,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7700284095180167991, guid: 0c807365b9687b644a173a505dba58bb,
+        type: 3}
+      propertyPath: itemCollider
+      value: 
+      objectReference: {fileID: 1915564917}
+    - target: {fileID: 7700284095180167991, guid: 0c807365b9687b644a173a505dba58bb,
+        type: 3}
+      propertyPath: _healingValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700284095180167991, guid: 0c807365b9687b644a173a505dba58bb,
+        type: 3}
+      propertyPath: potionVisuals
+      value: 
+      objectReference: {fileID: 1915564918}
+    - target: {fileID: 7700284095180167991, guid: 0c807365b9687b644a173a505dba58bb,
+        type: 3}
+      propertyPath: potionParticles
+      value: 
+      objectReference: {fileID: 198927480420149238, guid: b395d5d6eb4b4b846acc021ee036b744,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3044,6 +3145,18 @@ PrefabInstance:
 --- !u!4 &1915564915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5807341548557711614, guid: 0c807365b9687b644a173a505dba58bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1915564914}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1915564917 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 5807341548557711609, guid: 0c807365b9687b644a173a505dba58bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1915564914}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1915564918 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5807341548557711608, guid: 0c807365b9687b644a173a505dba58bb,
     type: 3}
   m_PrefabInstance: {fileID: 1915564914}
   m_PrefabAsset: {fileID: 0}

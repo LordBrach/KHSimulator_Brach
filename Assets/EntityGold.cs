@@ -13,14 +13,8 @@ public class EntityGold : MonoBehaviour
 
     [SerializeField] UnityEvent _onGainGoldEvent;
     [SerializeField] UnityEvent _onLoseGoldEvent;
-    // Update is called once per frame
-    void Update()
-    {
-        // check collision with item or if enemy killed or something
-        ChangeGoldValue(1);
-    }
 
-    void ChangeGoldValue(int value)
+    public void ChangeGoldValue(int value)
     {
         if(value > 0)
         {
